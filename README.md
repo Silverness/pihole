@@ -8,9 +8,33 @@ To start a container on the remote raspberry pi
 $ docker-compose --context remote-pi up -d
 ```
 
-To ssh into the pi-hole
+### SSH into the pi-hole
 
+```bask
 ssh {username}@{ipAddress}
+```
+
+## Update Pie Hole
+
+Using docker compose to update a container running on a remote hose (raspberry pi).
+
+1. Figure out the remote context to run the update.
+
+```bash
+docker context ls
+```
+
+2. Update remote docker images
+
+```bash
+docker-compose --context {contextName} pull
+```
+
+3. Start the container
+
+```bash
+docker-compose --context remote-pi up -d
+```
 
 ## Links
 
