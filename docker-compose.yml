@@ -1,9 +1,9 @@
-version: "3"
+version: "3.6"
 
 services:
   cloudflared:
     container_name: cloudflared
-    image: visibilityspots/cloudflared:arm
+    image: cloudflare/cloudflared:latest
     restart: unless-stopped
     networks:
       pihole_net:
@@ -11,7 +11,8 @@ services:
 
   pihole:
     container_name: pihole
-    image: pihole/pihole:latest
+    image: pihole/pihole
+    restart: unless-stopped
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -21,20 +22,21 @@ services:
     environment:
       TZ: "America/Los_Angeles"
       DNS1: 10.0.0.2#5054
-      DNS2: 1.1.1.1
+      DNS2: "" #'1.1.1.1'
       DNSMASQ_LISTENING: all
     networks:
       pihole_net:
         ipv4_address: 10.0.0.3
     volumes:
-      - "/etc-pihole/:/etc/pihole/"
-      - "/etc-dnsmasq.d/:/etc/dnsmasq.d/"
+      - "/mnt/app-data/pihole/config:/etc/pihole/"
+      - "/mnt/app-data/pihole/dnsmasq:/etc/dnsmasq.d/"
     dns:
       - 127.0.0.1
       - 1.1.1.1
     cap_add:
       - NET_ADMIN
-    restart: unless-stopped
+    depends_on:
+      - cloudflared
 
 networks:
   pihole_net:
