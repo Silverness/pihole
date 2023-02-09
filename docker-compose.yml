@@ -1,44 +1,17 @@
-version: "3.6"
-
-networks:
-  pihole_net:
-    ipam:
-      config:
-        - subnet: 10.0.0.0/29
+version: "3"
 
 services:
-  cloudflared:
-    container_name: cloudflared
-    image: cloudflare/cloudflared:2022.5.1
-    restart: unless-stopped
-    networks:
-      pihole_net:
-        ipv4_address: 10.0.0.2
-
   pihole:
     container_name: pihole
-    image: pihole/pihole:2022.04.3
-    restart: unless-stopped
+    image: pihole/pihole:latest
     ports:
-      - 53:53/tcp
-      - 53:53/udp
-      - 67:67/udp
-      - 80:80/tcp
-      - 443:443/tcp
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp"
     environment:
-      TZ: "America/Los_Angeles"
-      #FTLCONF_REPLY_ADDR4: 192.168.1.49
-      PIHOLE_DNS_: 10.0.0.2#5054
-      DNSMASQ_LISTENING: all
-    networks:
-      pihole_net:
-        ipv4_address: 10.0.0.3
+      TZ: "${TIMEZONE}"
+      WEBPASSWORD: "${PASSWORD}"
     volumes:
       - "/mnt/app-data/pihole/config:/etc/pihole/"
       - "/mnt/app-data/pihole/dnsmasq:/etc/dnsmasq.d/"
-    dns:
-      - 127.0.0.1
-    cap_add:
-      - NET_ADMIN
-    depends_on:
-      - cloudflared
+    restart: unless-stopped

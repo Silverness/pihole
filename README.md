@@ -68,6 +68,14 @@ Using docker compose to update a container running on a remote hose (raspberry p
     docker-compose --context remote-pi up -d
     ```
 
+### Docker Context
+
+Create new context for remote deployment
+
+```bash
+    docker context create remote ‐‐docker “host=ssh://user@remotemachine”
+```
+
 ### Reset Pi-hole web user password
 
 1. Attach to the running container on the Raspberry pi
