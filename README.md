@@ -98,3 +98,4 @@ Create new context for remote deployment
 [Firebog](https://firebog.net/)
 [Pi-hole Docker](https://visibilityspots.org/dockerized-cloudflared-pi-hole.html)
 [Pi-hole and cloudflared with Docker](https://mroach.com/2020/08/pi-hole-and-cloudflared-with-docker/#pi-hole-and-cloudflared-relationship)
+[Mikrotik Router](https://forum.mikrotik.com/viewtopic.php?p=876150)
